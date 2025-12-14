@@ -48,6 +48,8 @@ function obtenerElementos() {
         yellow: document.getElementById('yellow'),
         blue: document.getElementById('blue')
     };
+    
+    
 }
 
 function validarNombre(nombre) {
@@ -145,6 +147,7 @@ function reiniciarJuego() {
     startScreen.classList.remove('hidden');
     
     playerNameInput.value = '';
+    scoreDisplay.textContent = '0';
     inicializarVariables();
 }
 
