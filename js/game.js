@@ -150,7 +150,29 @@ function siguienteNivel() {
     secuencia.push(colorAleatorio);
     mostrarSecuencia();
 }
+// Guarda una partida en LocalStorage
+function guardarPartida() {
+    var fecha = new Date();
+    var partidaActual = {
+        nombre: nombreJugador,
+        puntaje: calcularPuntajeFinal(),
+        nivel: nivel,
+        fecha: fecha.toLocaleDateString('es-AR'),
+        hora: fecha.toLocaleTimeString('es-AR')
+    };
+    var partidas = obtenerPartidas();
+    partidas.push(partidaActual);
+    localStorage.setItem('partidasSimonSays', JSON.stringify(partidas));
+}
 
+// Obtiene todas las partidas guardadas del LocalStorage
+function obtenerPartidas() {
+    var partidasJSON = localStorage.getItem('partidasSimonSays');
+    if (partidasJSON) {
+        return JSON.parse(partidasJSON);
+    }
+    return [];
+}
 // Muestra el modal de game over con el puntaje final y guarda la partida
 function gameOver() {
     esperandoInput = false;
