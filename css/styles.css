@@ -282,70 +282,73 @@ main {
         font-size: 0.8rem;
     }
     main {
-        padding: 5px;
-        overflow-y: auto;
+        padding: 10px;
+        gap: 15px;
     }
     .game-info {
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 8px;
-        margin-bottom: 5px;
+        flex-direction: row;
+        gap: 25px;
+        padding: 10px;
+        margin-bottom: 0;
     }
     .info-item {
         gap: 3px;
     }
     .info-item span:first-child {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
     }
     .info-item span:last-child {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     .game-container {
         width: 100%;
     }
     .simon-board {
-        width: 70vw;
-        height: 70vw;
-        max-width: 300px;
-        max-height: 300px;
-        gap: 6px;
+        width: 85vw;
+        height: 85vw;
+        max-width: 380px;
+        max-height: 380px;
+        gap: 8px;
     }
     .simon-button {
-        width: calc(50% - 3px);
-        height: calc(50% - 3px);
+        width: calc(50% - 4px);
+        height: calc(50% - 4px);
     }
     .start-screen {
         padding: 20px 15px;
-        width: 85%;
+        width: 90%;
     }
     .start-screen h2 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
     }
     .start-screen p {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
     .contact-container {
         padding: 20px 15px;
-        width: 85%;
+        width: 90%;
     }
     .modal-content {
         padding: 20px 15px;
-        width: 85%;
+        width: 90%;
     }
 }
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     nav a {
         padding: 5px 8px;
         font-size: 0.75rem;
     }
+    .game-info {
+        gap: 20px;
+    }
     .simon-board {
-        width: 75vw;
-        height: 75vw;
-        max-width: 260px;
-        max-height: 260px;
+        width: 82vw;
+        height: 82vw;
+        max-width: 340px;
+        max-height: 340px;
     }
 }
