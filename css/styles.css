@@ -34,6 +34,7 @@ nav a:hover {
 main {
     display: flex;
     flex: 1;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
@@ -267,46 +268,93 @@ main {
 
 /*media Queries*/
 @media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
     header {
-        flex-direction: column;
-        gap: 20px;
-        padding: 15px 20px;
+        padding: 10px 15px;
     }
     header h1 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
     nav {
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
+        gap: 8px;
     }
     nav a {
-        text-align: center;
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+    main {
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
     }
     .simon-board {
-        width: 90vw;
-        max-width: 350px;
-        height: 90vw;
-        max-height: 350px;
+        width: 280px;
+        height: 280px;
+        gap: 8px;
+    }
+    .simon-button {
+        width: calc(50% - 4px);
+        height: calc(50% - 4px);
     }
     .game-info {
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px;
+        flex-direction: row;
+        gap: 30px;
+        padding: 10px 15px;
+        margin-bottom: 0;
+    }
+    .info-item span:first-child {
+        font-size: 0.75rem;
+    }
+    .info-item span:last-child {
+        font-size: 1.1rem;
     }
     .start-screen {
-        padding: 30px 20px;
+        padding: 25px 15px;
         width: 90%;
     }
     .start-screen h2 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+    .start-screen p {
+        font-size: 1rem;
     }
     .contact-container {
-        padding: 30px 20px;
+        padding: 25px 15px;
         width: 90%;
     }
+    .contact-container h2 {
+        font-size: 1.5rem;
+    }
     .modal-content {
-        padding: 30px 20px;
+        padding: 25px 15px;
         width: 90%;
+        max-width: 320px;
+    }
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 8px;
+    }
+    nav {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    nav a {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+    .simon-board {
+        width: 260px;
+        height: 260px;
     }
 }
