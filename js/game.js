@@ -87,9 +87,9 @@ function detenerTimer() {
     }
 }
 
-// Calcula el puntaje final con penalización por tiempo (1 punto cada 3 segundos)
+// Calcula el puntaje final con penalizacion por tiempo (1 punto cada 5 segundos de penalizacion)
 function calcularPuntajeFinal() {
-    var penalizacion = Math.floor(tiempoTranscurrido / 3);
+    var penalizacion = Math.floor(tiempoTranscurrido / 5);
     var puntajeFinal = puntaje - penalizacion;
     return puntajeFinal > 0 ? puntajeFinal : 0;
 }
