@@ -48,8 +48,6 @@ function obtenerElementos() {
         yellow: document.getElementById('yellow'),
         blue: document.getElementById('blue')
     };
-    
-    
 }
 
 function validarNombre(nombre) {
@@ -88,6 +86,7 @@ function siguienteNivel() {
 function mostrarSecuencia() {
     esperandoInput = false;
     var i = 0;
+    
     
     var intervalo = setInterval(function() {
         if (i >= secuencia.length) {
