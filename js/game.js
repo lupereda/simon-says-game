@@ -8,6 +8,7 @@ var puntaje;
 var nombreJugador;
 var esperandoInput;
 
+
 // Referencias a elementos del DOM
 var startScreen;
 var gameContainer;
@@ -19,6 +20,8 @@ var restartButton;
 var playerNameDisplay;
 var scoreDisplay;
 var finalScoreDisplay;
+var playerNameError;
+
 
 // Configuración del juego
 var colores;
@@ -45,6 +48,7 @@ function obtenerElementos() {
     playerNameDisplay = document.getElementById('playerName');
     scoreDisplay = document.getElementById('score');
     finalScoreDisplay = document.getElementById('finalScore');
+    playerNameError = document.getElementById('playerNameError');
     colores = ['green', 'red', 'yellow', 'blue'];
     botonesColor = {
         green: document.getElementById('green'),
@@ -59,7 +63,7 @@ function validarNombre(nombre) {
     return nombre.length >= 3;
 }
 
-// Aplica efecto visual de iluminacion y movimiento a un botón de color
+// Aplica efecto visual de iluminacion a un boton de color
 function iluminarBoton(color) {
     var boton = botonesColor[color];
     boton.classList.add('active');
@@ -99,7 +103,7 @@ function gameOver() {
     gameOverModal.classList.remove('hidden');
 }
 
-// Maneja el click del jugador en un boton de color
+// Maneja el click del jugador en un botón de color
 function manejarClickBoton(color) {
     if (!esperandoInput) {
         return;
@@ -123,9 +127,12 @@ function manejarClickBoton(color) {
 function iniciarJuego() {
     nombreJugador = playerNameInput.value.trim();
     if (!validarNombre(nombreJugador)) {
-        alert('El nombre debe tener al menos 3 letras');
+        playerNameInput.classList.add('error');
+        playerNameError.textContent = 'El nombre debe tener al menos 3 letras';
         return;
     }
+    playerNameInput.classList.remove('error');
+    playerNameError.textContent = '';
     startScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
     gameInfo.classList.remove('hidden');
@@ -142,6 +149,9 @@ function reiniciarJuego() {
     gameInfo.classList.add('hidden');
     startScreen.classList.remove('hidden');
     playerNameInput.value = '';
+    playerNameInput.classList.remove('error');
+    playerNameError.textContent = '';
+    playerNameInput.placeholder = 'Mínimo 3 letras';
     scoreDisplay.textContent = '0';
     inicializarVariables();
 }
