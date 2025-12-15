@@ -252,3 +252,61 @@ main {
 .modal-content button:hover {
     background-color: #c23b52;
 }
+
+/*validaciones del formulario*/
+.form-group input.error,
+.form-group textarea.error {
+    border-color: #ff4444;
+}
+.error-message {
+    display: block;
+    margin-top: 5px;
+    color: #ff4444;
+    font-size: 0.9rem;
+}
+
+/*media Queries*/
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px 20px;
+    }
+    header h1 {
+        font-size: 1.5rem;
+    }
+    nav {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    nav a {
+        text-align: center;
+    }
+    .simon-board {
+        width: 90vw;
+        max-width: 350px;
+        height: 90vw;
+        max-height: 350px;
+    }
+    .game-info {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    .start-screen {
+        padding: 30px 20px;
+        width: 90%;
+    }
+    .start-screen h2 {
+        font-size: 2rem;
+    }
+    .contact-container {
+        padding: 30px 20px;
+        width: 90%;
+    }
+    .modal-content {
+        padding: 30px 20px;
+        width: 90%;
+    }
+}
