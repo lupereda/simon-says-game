@@ -7,7 +7,9 @@ var nivel;
 var puntaje;
 var nombreJugador;
 var esperandoInput;
-
+var tiempoInicio;
+var tiempoTranscurrido;
+var intervaloTimer;
 
 // Referencias a elementos del DOM
 var startScreen;
@@ -20,8 +22,8 @@ var restartButton;
 var playerNameDisplay;
 var scoreDisplay;
 var finalScoreDisplay;
+var timerDisplay;
 var playerNameError;
-
 
 // Configuración del juego
 var colores;
@@ -34,6 +36,7 @@ function inicializarVariables() {
     nivel = 0;
     puntaje = 0;
     esperandoInput = false;
+    tiempoTranscurrido = 0;
 }
 
 // Obtiene y guarda referencias a todos los elementos del DOM necesarios
@@ -48,6 +51,7 @@ function obtenerElementos() {
     playerNameDisplay = document.getElementById('playerName');
     scoreDisplay = document.getElementById('score');
     finalScoreDisplay = document.getElementById('finalScore');
+    timerDisplay = document.getElementById('timer');
     playerNameError = document.getElementById('playerNameError');
     colores = ['green', 'red', 'yellow', 'blue'];
     botonesColor = {
@@ -63,7 +67,58 @@ function validarNombre(nombre) {
     return nombre.length >= 3;
 }
 
-// Aplica efecto visual de iluminacion a un boton de color
+// Actualiza el display del timer cada segundo
+function actualizarTimer() {
+    tiempoTranscurrido = Math.floor((Date.now() - tiempoInicio) / 1000);
+    timerDisplay.textContent = tiempoTranscurrido + 's';
+}
+
+// Inicia el contador de tiempo
+function iniciarTimer() {
+    tiempoInicio = Date.now();
+    tiempoTranscurrido = 0;
+    intervaloTimer = setInterval(actualizarTimer, 1000);
+}
+
+// Detiene el contador de tiempo
+function detenerTimer() {
+    if (intervaloTimer) {
+        clearInterval(intervaloTimer);
+    }
+}
+
+// Calcula el puntaje final con penalización por tiempo (1 punto cada 3 segundos)
+function calcularPuntajeFinal() {
+    var penalizacion = Math.floor(tiempoTranscurrido / 3);
+    var puntajeFinal = puntaje - penalizacion;
+    return puntajeFinal > 0 ? puntajeFinal : 0;
+}
+
+// Guarda una partida en LocalStorage
+function guardarPartida() {
+    var fecha = new Date();
+    var partidaActual = {
+        nombre: nombreJugador,
+        puntaje: calcularPuntajeFinal(),
+        nivel: nivel,
+        fecha: fecha.toLocaleDateString('es-AR'),
+        hora: fecha.toLocaleTimeString('es-AR')
+    };
+    var partidas = obtenerPartidas();
+    partidas.push(partidaActual);
+    localStorage.setItem('partidasSimonSays', JSON.stringify(partidas));
+}
+
+// Obtiene todas las partidas guardadas del LocalStorage
+function obtenerPartidas() {
+    var partidasJSON = localStorage.getItem('partidasSimonSays');
+    if (partidasJSON) {
+        return JSON.parse(partidasJSON);
+    }
+    return [];
+}
+
+// Aplica efecto visual de iluminación a un botón de color
 function iluminarBoton(color) {
     var boton = botonesColor[color];
     boton.classList.add('active');
@@ -96,10 +151,14 @@ function siguienteNivel() {
     mostrarSecuencia();
 }
 
-// Muestra el modal de game over con el puntaje final
+// Muestra el modal de game over con el puntaje final y guarda la partida
 function gameOver() {
     esperandoInput = false;
-    finalScoreDisplay.textContent = puntaje;
+    detenerTimer();
+    var puntajeFinal = calcularPuntajeFinal();
+    var penalizacion = puntaje - puntajeFinal;
+    finalScoreDisplay.textContent = puntajeFinal + ' (Aciertos: ' + puntaje + ' - Penalización: ' + penalizacion + ')';
+    guardarPartida();
     gameOverModal.classList.remove('hidden');
 }
 
@@ -133,17 +192,20 @@ function iniciarJuego() {
     }
     playerNameInput.classList.remove('error');
     playerNameError.textContent = '';
+    inicializarVariables();
     startScreen.classList.add('hidden');
     gameContainer.classList.remove('hidden');
     gameInfo.classList.remove('hidden');
     playerNameDisplay.textContent = nombreJugador;
-    scoreDisplay.textContent = puntaje;
-    inicializarVariables();
+    scoreDisplay.textContent = '0';
+    timerDisplay.textContent = '0s';
+    iniciarTimer();
     siguienteNivel();
 }
 
 // Reinicia el juego volviendo a la pantalla de inicio
 function reiniciarJuego() {
+    detenerTimer();
     gameOverModal.classList.add('hidden');
     gameContainer.classList.add('hidden');
     gameInfo.classList.add('hidden');
@@ -153,6 +215,7 @@ function reiniciarJuego() {
     playerNameError.textContent = '';
     playerNameInput.placeholder = 'Mínimo 3 letras';
     scoreDisplay.textContent = '0';
+    timerDisplay.textContent = '0s';
     inicializarVariables();
 }
 
@@ -174,7 +237,7 @@ function configurarEventos() {
     });
 }
 
-// Inicializa el juego cuando el DOM esta completamente cargado
+// Inicializa el juego cuando el DOM está completamente cargado
 function inicializar() {
     obtenerElementos();
     configurarEventos();
